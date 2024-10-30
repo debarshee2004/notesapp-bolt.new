@@ -57,3 +57,72 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Markdown Preview Styles */
+.prose pre {
+  @apply bg-secondary rounded-lg p-4;
+}
+
+.prose code {
+  @apply bg-secondary px-1.5 py-0.5 rounded text-sm;
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose a {
+  @apply text-blue-600 dark:text-blue-400 hover:underline;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-muted pl-4 italic;
+}
+
+.prose ul {
+  @apply list-disc pl-6;
+}
+
+.prose ol {
+  @apply list-decimal pl-6;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-6 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-bold mt-4 mb-2;
+}
+
+.prose h4 {
+  @apply text-lg font-bold mt-4 mb-2;
+}
+
+.prose p {
+  @apply my-4;
+}
+
+.prose hr {
+  @apply my-8 border-muted;
+}
+
+.prose table {
+  @apply w-full border-collapse my-6;
+}
+
+.prose th {
+  @apply border border-muted px-4 py-2 bg-muted;
+}
+
+.prose td {
+  @apply border border-muted px-4 py-2;
+}
+
+.prose code:not(pre code) {
+  @apply text-pink-600 dark:text-pink-400;
+}
