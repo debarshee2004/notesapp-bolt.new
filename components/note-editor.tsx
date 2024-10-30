@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Note } from '@/lib/types';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Download, FileDown } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import dynamic from 'next/dynamic';
+import { useState, useEffect } from "react";
+import { Note } from "@/lib/types";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Download, FileDown } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+// import dynamic from 'next/dynamic';
 
-const html2pdf = dynamic(() => import('html2pdf.js'), { ssr: false });
+// const html2pdf = dynamic(() => import('html2pdf.js'), { ssr: false });
 
 interface NoteEditorProps {
   note: Note | null;
@@ -22,12 +22,12 @@ interface NoteEditorProps {
 }
 
 export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
-  const [title, setTitle] = useState(note?.title || '');
-  const [content, setContent] = useState(note?.content || '');
+  const [title, setTitle] = useState(note?.title || "");
+  const [content, setContent] = useState(note?.content || "");
 
   useEffect(() => {
-    setTitle(note?.title || '');
-    setContent(note?.content || '');
+    setTitle(note?.title || "");
+    setContent(note?.content || "");
   }, [note]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,30 +54,30 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
 
   const downloadMarkdown = () => {
     if (!note) return;
-    const element = document.createElement('a');
-    const file = new Blob([content], { type: 'text/markdown' });
+    const element = document.createElement("a");
+    const file = new Blob([content], { type: "text/markdown" });
     element.href = URL.createObjectURL(file);
-    element.download = `${title || 'untitled'}.md`;
+    element.download = `${title || "untitled"}.md`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
   };
 
-  const downloadPDF = () => {
-    if (!note) return;
-    const element = document.getElementById('markdown-preview');
-    if (!element || !html2pdf) return;
+  // const downloadPDF = () => {
+  //   if (!note) return;
+  //   const element = document.getElementById('markdown-preview');
+  //   if (!element || !html2pdf) return;
 
-    const opt = {
-      margin: 1,
-      filename: `${title || 'untitled'}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-    };
+  //   const opt = {
+  //     margin: 1,
+  //     filename: `${title || 'untitled'}.pdf`,
+  //     image: { type: 'jpeg', quality: 0.98 },
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+  //   };
 
-    html2pdf().set(opt).from(element).save();
-  };
+  //   html2pdf().set(opt).from(element).save();
+  // };
 
   if (!note) {
     return (
@@ -148,7 +148,7 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
+                    const match = /language-(\w+)/.exec(className || "");
                     return !inline && match ? (
                       <SyntaxHighlighter
                         style={vscDarkPlus}
@@ -156,7 +156,7 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
                         PreTag="div"
                         {...props}
                       >
-                        {String(children).replace(/\n$/, '')}
+                        {String(children).replace(/\n$/, "")}
                       </SyntaxHighlighter>
                     ) : (
                       <code className={className} {...props}>
