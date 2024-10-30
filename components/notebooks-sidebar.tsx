@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { PlusCircle, Book, MoreVertical, Pencil, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { Notebook } from '@/lib/types';
+import { PlusCircle, Book, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Notebook } from "@/lib/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,7 +22,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 
 interface NotebooksSidebarProps {
   notebooks: Notebook[];
@@ -48,7 +48,7 @@ export function NotebooksSidebar({
   const handleRename = (notebook: Notebook, newTitle: string) => {
     onUpdateNotebook({
       ...notebook,
-      title: newTitle.trim() || 'Untitled Notebook',
+      title: newTitle.trim() || "Untitled Notebook",
     });
     setEditingId(null);
   };
@@ -69,7 +69,11 @@ export function NotebooksSidebar({
   return (
     <div className="w-64 border-r h-full flex flex-col">
       <div className="p-4 border-b">
-        <Button onClick={onCreateNotebook} className="w-full" variant="secondary">
+        <Button
+          onClick={onCreateNotebook}
+          className="w-full"
+          variant="secondary"
+        >
           <PlusCircle className="h-4 w-4 mr-2" />
           New Notebook
         </Button>
@@ -91,7 +95,7 @@ export function NotebooksSidebar({
                   className="h-8 text-sm"
                   onBlur={(e) => handleRename(notebook, e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       handleRename(notebook, e.currentTarget.value);
                     }
                   }}
@@ -139,7 +143,8 @@ export function NotebooksSidebar({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Notebook</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete this notebook and all its notes. This action cannot be undone.
+              This will permanently delete this notebook and all its notes. This
+              action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

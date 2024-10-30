@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { PlusCircle, FileText, MoreVertical, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { Note } from '@/lib/types';
-import { format } from 'date-fns';
+import { PlusCircle, FileText, MoreVertical, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Note } from "@/lib/types";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,8 +21,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { useState } from 'react';
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 interface NotesSidebarProps {
   notes: Note[];
@@ -79,10 +79,12 @@ export function NotesSidebar({
               >
                 <div className="flex items-center w-full">
                   <FileText className="h-4 w-4 mr-2 flex-shrink-0" />
-                  <span className="truncate text-sm">{note.title || 'Untitled'}</span>
+                  <span className="truncate text-sm">
+                    {note.title || "Untitled"}
+                  </span>
                 </div>
                 <span className="text-xs text-muted-foreground mt-1">
-                  {format(new Date(note.updatedAt), 'MMM d, yyyy')}
+                  {format(new Date(note.updatedAt), "MMM d, yyyy")}
                 </span>
               </button>
               <DropdownMenu>
@@ -115,7 +117,8 @@ export function NotesSidebar({
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Note</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete this note. This action cannot be undone.
+              This will permanently delete this note. This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

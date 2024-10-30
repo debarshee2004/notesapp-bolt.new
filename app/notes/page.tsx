@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import { NotebooksSidebar } from '@/components/notebooks-sidebar';
-import { NotesSidebar } from '@/components/notes-sidebar';
-import { NoteEditor } from '@/components/note-editor';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Note, Notebook } from '@/lib/types';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { useLocalStorage } from "@/hooks/use-local-storage";
+import { NotebooksSidebar } from "@/components/notebooks-sidebar";
+import { NotesSidebar } from "@/components/notes-sidebar";
+import { NoteEditor } from "@/components/note-editor";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Note, Notebook } from "@/lib/types";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function NotesPage() {
   const { notebooks, notes, saveNotebooks, saveNotes } = useLocalStorage();
@@ -26,12 +26,12 @@ export default function NotesPage() {
   const createNotebook = () => {
     const newNotebook: Notebook = {
       id: crypto.randomUUID(),
-      title: 'New Notebook',
+      title: "New Notebook",
       createdAt: new Date().toISOString(),
     };
     saveNotebooks([...notebooks, newNotebook]);
     setActiveNotebookId(newNotebook.id);
-    toast.success('Notebook created');
+    toast.success("Notebook created");
   };
 
   const updateNotebook = (updatedNotebook: Notebook) => {
@@ -39,7 +39,7 @@ export default function NotesPage() {
       nb.id === updatedNotebook.id ? updatedNotebook : nb
     );
     saveNotebooks(updatedNotebooks);
-    toast.success('Notebook updated');
+    toast.success("Notebook updated");
   };
 
   const deleteNotebook = (id: string) => {
@@ -49,7 +49,7 @@ export default function NotesPage() {
       setActiveNotebookId(null);
       setActiveNoteId(null);
     }
-    toast.success('Notebook deleted');
+    toast.success("Notebook deleted");
   };
 
   const createNote = () => {
@@ -57,15 +57,15 @@ export default function NotesPage() {
 
     const newNote: Note = {
       id: crypto.randomUUID(),
-      title: 'Untitled',
-      content: '',
+      title: "Untitled",
+      content: "",
       notebookId: activeNotebookId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     saveNotes([...notes, newNote]);
     setActiveNoteId(newNote.id);
-    toast.success('Note created');
+    toast.success("Note created");
   };
 
   const updateNote = (updatedNote: Note) => {
@@ -80,7 +80,7 @@ export default function NotesPage() {
     if (activeNoteId === id) {
       setActiveNoteId(null);
     }
-    toast.success('Note deleted');
+    toast.success("Note deleted");
   };
 
   // const toggleNotebooksSidebar = () => {
@@ -101,8 +101,8 @@ export default function NotesPage() {
     <main className="flex h-screen bg-background">
       <div
         className={cn(
-          'fixed inset-y-0 z-20 transition-transform duration-300 md:relative',
-          showNotebooksSidebar ? 'translate-x-0' : '-translate-x-64'
+          "fixed inset-y-0 z-20 transition-transform duration-300 md:relative",
+          showNotebooksSidebar ? "translate-x-0" : "-translate-x-64"
         )}
       >
         <NotebooksSidebar
@@ -124,8 +124,8 @@ export default function NotesPage() {
       {activeNotebook && (
         <div
           className={cn(
-            'fixed inset-y-0 left-64 z-20 transition-transform duration-300 md:relative md:left-0',
-            showNotesSidebar ? 'translate-x-0' : '-translate-x-72'
+            "fixed inset-y-0 left-64 z-20 transition-transform duration-300 md:relative md:left-0",
+            showNotesSidebar ? "translate-x-0" : "-translate-x-72"
           )}
         >
           <NotesSidebar

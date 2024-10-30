@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Notebook } from 'lucide-react';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Notebook } from "lucide-react";
 
 export default function Home() {
   return (
