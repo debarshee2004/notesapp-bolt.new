@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Note } from "@/lib/types";
+import { useState, useEffect, ReactNode, ReactElement } from "react";
+import { Note } from "@/lib/types"; // Ensure this type is defined correctly
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,22 +12,47 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-// import dynamic from 'next/dynamic';
-
-// const html2pdf = dynamic(() => import('html2pdf.js'), { ssr: false });
 
 interface NoteEditorProps {
-  note: Note | null;
-  onUpdate: (note: Note) => void;
+  note: Note | null; // Note type should be defined in your types
+  onUpdate: (note: Note) => void; // Function signature for updating note
 }
+
+const CodeBlock = ({
+  inline = false,
+  className,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLElement> & { inline?: boolean }): ReactElement => {
+  const match = /language-(\w+)/.exec(className || "");
+  return !inline && match ? (
+    <SyntaxHighlighter
+      style={vscDarkPlus as any}
+      language={match[1]}
+      PreTag="div"
+      {...props}
+    >
+      {String(children).replace(/\n$/, "")}
+    </SyntaxHighlighter>
+  ) : (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  );
+};
 
 export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
   const [title, setTitle] = useState(note?.title || "");
   const [content, setContent] = useState(note?.content || "");
 
   useEffect(() => {
-    setTitle(note?.title || "");
-    setContent(note?.content || "");
+    if (note) {
+      setTitle(note.title);
+      setContent(note.content);
+    } else {
+      setTitle(""); // Clear title if note is null
+      setContent(""); // Clear content if note is null
+    }
   }, [note]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,22 +88,6 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
     document.body.removeChild(element);
   };
 
-  // const downloadPDF = () => {
-  //   if (!note) return;
-  //   const element = document.getElementById('markdown-preview');
-  //   if (!element || !html2pdf) return;
-
-  //   const opt = {
-  //     margin: 1,
-  //     filename: `${title || 'untitled'}.pdf`,
-  //     image: { type: 'jpeg', quality: 0.98 },
-  //     html2canvas: { scale: 2 },
-  //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-  //   };
-
-  //   html2pdf().set(opt).from(element).save();
-  // };
-
   if (!note) {
     return (
       <div className="flex-1 flex items-center justify-center text-muted-foreground">
@@ -107,15 +116,6 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
               <FileDown className="h-4 w-4" />
               Download Markdown File
             </Button>
-            {/* <Button
-              variant="outline"
-              size="sm"
-              onClick={downloadPDF}
-              className="flex items-center gap-2"
-            >
-              <Download className="h-4 w-4" />
-              PDF
-            </Button> */}
           </div>
         </div>
       </div>
@@ -147,23 +147,7 @@ export function NoteEditor({ note, onUpdate }: NoteEditorProps) {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        style={vscDarkPlus}
-                        language={match[1]}
-                        PreTag="div"
-                        {...props}
-                      >
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
+                  code: CodeBlock,
                 }}
               >
                 {content}
